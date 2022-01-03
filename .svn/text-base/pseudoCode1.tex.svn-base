@@ -1,0 +1,187 @@
+
+
+\begin{algorithm} [th!]
+\small
+\caption{\small  The Basic Algorithm}
+\label{alg:client}
+
+\begin{algorithmic}[1]
+\makeatletter\setcounter{ALG@line}{0}\makeatother
+
+\Procedure{Put}{Key $k$, Value $v$}
+     \State $\ts \gets$ NewTime() \Comment{generates a unique timestamp} \label{beginPut1}
+     \State RWL.lockReadMode() 
+     \State $\ptr \gets$ CV.getFirstComponent()     
+     \State $status \gets$ $\ptr$.insert($\tuple{k,t,v}$)
+     \State RWL.unlock()
+     \State ReleaseTime($\ts$)
+     \If {$status=FULL$ }
+        \State request merge (asynchronously)
+        \State \Goto{beginPut1} \Comment{restart}
+     \EndIf
+\EndProcedure
+%
+%\vspace{7pt}
+%%
+%\Function{NewTime}{}
+%    \State return time.incrementAndGet()
+%\EndFunction
+%%
+%\vspace{7pt}
+%%
+%\Procedure{ReleaseTime}{Timestamp $ts$}\\
+%\Comment{empty}
+%\EndProcedure
+%%
+\vspace{7pt}
+%
+\Procedure{Merge}{} \Comment{executed by a single thread}
+      \State $c_1' \gets$ new InMemoryComponent()
+      \State RWL.lockWriteMode()
+      \State $\tuple{c_1,c_2,\ldots,c_{n}} \gets$ CV.getAllComponents()
+      \State CV.set($\tuple{c_1',c_1,c_2,\ldots,c_{n}}$)
+      \State RWL.unlock()
+      
+      \State $\tuple{c_2',\ldots,c_{n-1}'} \gets$ DoMerge($\tuple{c_1,c_2,\ldots,c_{n}}$)
+      
+      \State RWL.lockWriteMode()
+      \State CV.set($\tuple{c_1',c_2',\ldots,c_{n-1}'}$)      
+      \State RWL.unlock()
+%    \EndIf
+\EndProcedure
+%
+\vspace{7pt}
+%
+\Function{Get}{Key $key$}
+    \State $ts    \gets$ NewTime()
+    \State return PrivateGet($key$,$ts$)
+\EndFunction
+%
+\vspace{7pt}
+%
+\Function{PrivateGet}{Key $key$, Timestamp $ts$}
+    \State RWL.lockReadMode() 
+    \State $\tuple{v_1,\ldots,v_{k}} \gets$ CV.getAllComponents()
+    \State RWL.unlock()
+    \For{$i \gets 1 \ldots {k}$}
+       \State $rec \gets$ $v_{i}$.get(\tuple{key,ts})
+       \If {$rec \neq \NONE$ \&\& $rec.value=DELETED$}
+         \State return NotFound
+       \ElsIf {$rec \neq \NONE$}
+         \State return $rec.value$
+       \EndIf
+    \EndFor
+    \State return NotFound
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+\begin{algorithm} [th!]
+\small
+\caption{\small  TBD }
+\label{alg:client}
+
+\begin{algorithmic}[1]
+\makeatletter\setcounter{ALG@line}{0}\makeatother
+
+%\Procedure{Put}{Key $key$, Value $val$}
+%      \State $ts    \gets$ time.incrementAndGet() \label{beginPut2}
+%      \State activeTimestamps.add($ts$)
+%      \If {$ts < latestSnapshot$}
+%        \State activeTimestamps.remove($ts$)
+%        \State \Goto{beginPut2} \Comment{restart}
+%      \EndIf
+%     \State SELock.lockShared()
+%     \State $C \gets$ compVec.getFirst()
+%     \State $status \gets$ $C$.add($\tuple{key,ts}$, $val$)
+%     \State SELock.unlock()
+%     \State activeTimestamps.remove(ts)
+%     \If {$status=FULL$ }
+%        \State request merge (asynchronously)
+%        \State \Goto{beginPut2} \Comment{restart}
+%     \EndIf
+%\EndProcedure
+%%
+%\vspace{7pt}
+%%
+\Function{NewTime}{}
+     \State $ts    \gets$ time.incrementAndGet() \label{beginNewTime}
+      \State activeTimestamps.add($ts$)
+      \If {$ts < latestSnapshot$}
+        \State activeTimestamps.remove($ts$)
+        \State \Goto{beginNewTime} \Comment{restart}
+      \EndIf
+      \State return $ts$
+\EndFunction
+%
+\vspace{7pt}
+%
+\Function{ReleaseTime}{Timestamp $ts$}
+  \State activeTimestamps.remove(ts);
+\EndFunction
+\vspace{7pt}
+%
+\Function{GetTime}{}
+  \State return time.get()
+\EndFunction
+\vspace{7pt}
+\Function{GetCurrentSnapshot}{}
+    \State $ts    \gets$ min(time.get(),activeTimestamps.getMin()-1)
+    \State $latestSnapshot \gets$ max($latestSnapshot$,$ts$) \Comment{atomic}
+    \State return Snapshot($latestSnapshot$)
+\EndFunction
+\vspace{7pt}
+\Function{Get}{Key $key$,Snapshot sn}
+    \State $ts    \gets$ sn.time()
+    \State return PrivateGet($key$,$ts$)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm} [th!]
+\small
+\caption{\small  TBD }
+\label{alg:client}
+
+\begin{algorithmic}[1]
+\makeatletter\setcounter{ALG@line}{0}\makeatother
+
+\Procedure{ReadModifyWrite}{Key $key$, Function $f$}
+
+    \State $rTime \gets$ time.get() \label{beginRMW}
+    \State $rValue \gets$ PrivateGet($key$,$rTime$)
+
+    \State $wValue \gets f(rValue)$
+
+     \If {$wValue=NONE$ }
+       \State  return
+     \EndIf
+
+      \State $wTime \gets$ NewTime() \label{beginPut3}
+     \State SELock.lockShared()
+     \State $C \gets$ compVec.getFirst()
+     \State $status \gets$ $C$.condAdd($\tuple{key,wTime}$, $wValue$,$rTime$)
+     \State SELock.unlock()
+     \State ReleaseTime($wTime$)
+     \If {$status=CONFLICT$ }
+        \State \Goto{beginRMW} \Comment{restart (read and write)}
+     \EndIf
+     \If {$status=FULL$ }
+        \State request merge (asynchronously)
+        \State \Goto{beginPut3} \Comment{restart (write)}
+     \EndIf
+
+
+
+\EndProcedure
+%\vspace{7pt}
+\end{algorithmic}
+\end{algorithm}
+
+
+

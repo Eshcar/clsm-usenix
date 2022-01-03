@@ -1,0 +1,229 @@
+\relax 
+\citation{Bigtable2006}
+\citation{Percolator2010}
+\citation{FBMessaging2012}
+\citation{PNUTS2008}
+\citation{leveldb,Bigtable2006,PNUTS2008,hbase,Lakshman2010,RocksDB,BLSM2012}
+\citation{Bigtable2006,PNUTS2008}
+\citation{hbaseRegionArch}
+\citation{leveldb}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
+\newlabel{sec:intro}{{1}{1}}
+\citation{leveldb,Hyperdex2012}
+\citation{Bigtable2006}
+\citation{Omid2014}
+\citation{PNUTS2008,Dynamo07}
+\citation{RocksDB}
+\citation{leveldb}
+\citation{Hyperdex2012}
+\citation{BLSM2012}
+\citation{RocksDB}
+\citation{GrayTP1993}
+\citation{Bigtable2006,PNUTS2008,hbase}
+\citation{Percolator2010}
+\citation{Dynamo07}
+\citation{Bigtable2006,PNUTS2008}
+\citation{hbase}
+\citation{hbaseRegionArch}
+\citation{Bigtable2006,PNUTS2008,hbase}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Architecture Principles}{2}}
+\newlabel{sec:background}{{2}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Data Model and API}{2}}
+\newlabel{ssec:kvs}{{2.1}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Scalability in Distributed Key-Value Stores}{2}}
+\citation{Tanenbaum:2014:MOS,RocksDBBenchmarks,Wu:2012:AWB}
+\citation{Tanenbaum:2014:MOS}
+\citation{O'Neil1996}
+\citation{Bigtable2006,FBMessaging2012,leveldb,RocksDB,Hyperdex2012,BLSM2012}
+\citation{leveldb,Hyperdex2012}
+\citation{ConcurrentSkipListMap,bronson2010practical,libcds}
+\citation{Papadimitriou1979}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \bf  {Comparing two approaches to scalability with production workload. The resource-isolated configuration exercises {LevelDB\/} and {HyperLevelDB\/} with 4 separate partitions, whereas the resource-shared configuration evaluates {cLSM\/} with one big partition. }\relax }}{3}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:production_partitions}{{1}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Log-Structured Merge}{3}}
+\newlabel{ssec:lsm}{{2.3}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}cLSM\ Algorithm}{3}}
+\newlabel{sec:algorithm}{{3}{3}}
+\citation{libcds,Herlihy2008,ConcurrencyInWindows2008}
+\citation{ConcurrencyInWindows2008}
+\citation{libcds}
+\newlabel{fig:tri}{{2a}{4}}
+\newlabel{sub@fig:tri}{{a}{4}}
+\newlabel{fig:comp}{{2b}{4}}
+\newlabel{sub@fig:comp}{{b}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \bf  LSM-DS architecture.\relax }}{4}}
+\newlabel{fig:architecture}{{2}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Put and Get Operations}{4}}
+\newlabel{Se:Basic}{{3.1}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Snapshot Scans}{4}}
+\newlabel{Se:Snapshots}{{3.2}{4}}
+\citation{ConcurrentSkipListMap,bronson2010practical}
+\citation{ConcurrencyInWindows2008}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \relax \fontsize  {9}{11}\selectfont  \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@ \abovedisplayshortskip \z@ plus2\p@ \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@ \def \leftmargin \leftmargini \topsep 4\p@ plus2\p@ minus2\p@ \parsep 2\p@ plus\p@ minus\p@ \itemsep \parsep {\leftmargin \leftmargini \topsep 4\p@ plus2\p@ minus2\p@ \parsep 2\p@ plus\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip Basic cLSM\ algorithm.\relax }}{5}}
+\newlabel{alg:client}{{1}{5}}
+\newlabel{beginPut1}{{2}{5}}
+\newlabel{Al:basicAlg}{{1}{5}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Snapshot Management Mechanism}{5}}
+\newlabel{se:snapshot-mechanism}{{3.2.1}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Snapshots $s_1$ and $s_2$ cannot use the current values of \emph  {timeCounter}, $99$ and $98$ respectively, since a {\relax \fontsize  {9}{11}\selectfont  \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@ \abovedisplayshortskip \z@ plus2\p@ \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@ \def \leftmargin = \leftmargini \listparindent = 0pt{\leftmargin \leftmargini \topsep 4\p@ plus2\p@ minus2\p@ \parsep 2\p@ plus\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip \texttt  {next}} operation pertaining to snapshot $s_1$ may miss the concurrently written key $a$ with timestamp $98$, while a {\relax \fontsize  {9}{11}\selectfont  \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@ \abovedisplayshortskip \z@ plus2\p@ \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@ \def \leftmargin = \leftmargini \listparindent = 0pt{\leftmargin \leftmargini \topsep 4\p@ plus2\p@ minus2\p@ \parsep 2\p@ plus\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip \texttt  {next}} operation pertaining to snapshot $s_2$ filters out the key $b$ with timestamp $99$. The snapshot time should instead be $97$, which excludes the concurrently inserted keys.\relax }}{5}}
+\newlabel{fig:snap-ts}{{3}{5}}
+\citation{Herlihy:1990}
+\citation{Herlihy2008}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The put operation cannot use the value $98$ since a snapshot operation already assumes there are no active put operations before timestamp $99$. Using the timestamp $98$ may lead to the problem depicted in Figure\nobreakspace  {}3\hbox {}. The put operation should instead acquire a new timestamp.\relax }}{6}}
+\newlabel{fig:race}{{4}{6}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces \relax \fontsize  {9}{11}\selectfont  \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@ \abovedisplayshortskip \z@ plus2\p@ \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@ \def \leftmargin \leftmargini \topsep 4\p@ plus2\p@ minus2\p@ \parsep 2\p@ plus\p@ minus\p@ \itemsep \parsep {\leftmargin \leftmargini \topsep 4\p@ plus2\p@ minus2\p@ \parsep 2\p@ plus\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip cLSM\ snapshot algorithm.\relax }}{6}}
+\newlabel{alg:snap}{{2}{6}}
+\newlabel{code:active:ts}{{10}{6}}
+\newlabel{code:snap:ts}{{11}{6}}
+\newlabel{LineSnapTime}{{12}{6}}
+\newlabel{code:snap:blocking}{{13}{6}}
+\newlabel{Al:snapAlg}{{2}{6}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Partial Scans and Snapshot Reads}{6}}
+\newlabel{se:range}{{3.2.2}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Atomic Read-Modify-Write}{6}}
+\newlabel{Se:RMW}{{3.3}{6}}
+\citation{Herlihy2008}
+\citation{libcds}
+\citation{Herlihy2008}
+\citation{libcds}
+\citation{Herlihy2008}
+\citation{leveldb}
+\citation{RocksDB}
+\citation{Bloom1970}
+\citation{libcds}
+\citation{michael2004scalable}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces \relax \fontsize  {9}{11}\selectfont  \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@ \abovedisplayshortskip \z@ plus2\p@ \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@ \def \leftmargin \leftmargini \topsep 4\p@ plus2\p@ minus2\p@ \parsep 2\p@ plus\p@ minus\p@ \itemsep \parsep {\leftmargin \leftmargini \topsep 4\p@ plus2\p@ minus2\p@ \parsep 2\p@ plus\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip RMW algorithm for linked list memory component.\relax }}{7}}
+\newlabel{alg:RMW}{{3}{7}}
+\newlabel{LineReadTuple}{{4}{7}}
+\newlabel{LineSetPrev}{{5}{7}}
+\newlabel{conflict1Line}{{6}{7}}
+\newlabel{LineSetNext}{{7}{7}}
+\newlabel{conflict2Line}{{8}{7}}
+\newlabel{newTS}{{9}{7}}
+\newlabel{CASLine}{{12}{7}}
+\newlabel{Al:RMWAlg}{{3}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Implementation}{7}}
+\newlabel{sec:impl}{{4}{7}}
+\citation{RocksDBBenchmarks}
+\citation{leveldb}
+\citation{Hyperdex2012,HyperLevelDB}
+\citation{RocksDB}
+\citation{BLSM2012}
+\citation{RocksDBOptimizedLocks}
+\citation{hyperdex}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Evaluation}{8}}
+\newlabel{sec:eval}{{5}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Synthetic Workloads}{8}}
+\newlabel{sec:microbenchmarks}{{5.1}{8}}
+\citation{hbaseRegionArch}
+\citation{shacham2014verifying}
+\citation{GrayTP1993}
+\newlabel{fig:100w_throughput}{{5a}{9}}
+\newlabel{sub@fig:100w_throughput}{{a}{9}}
+\newlabel{fig:100w_latencyVSthroughput}{{5b}{9}}
+\newlabel{sub@fig:100w_latencyVSthroughput}{{b}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \bf  {Write performance -- a 100\% write scenario, with the keys uniformly distributed across the domain. {cLSM\/} scales to 8 threads and achieves 80\% throughput advantage over the closest competitor, which only scales to 4. }\relax }}{9}}
+\newlabel{fig:100w}{{5}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Production Workloads}{9}}
+\newlabel{sec:realworkloads}{{5.2}{9}}
+\newlabel{fig:100r_throughput}{{6a}{10}}
+\newlabel{sub@fig:100r_throughput}{{a}{10}}
+\newlabel{fig:100r_latencyVSthroughput}{{6b}{10}}
+\newlabel{sub@fig:100r_latencyVSthroughput}{{b}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \bf  {Read performance -- a 100\% read scenario with locality (90\% of keys picked from 10\% popular blocks). }\relax }}{10}}
+\newlabel{fig:100r}{{6}{10}}
+\newlabel{fig:50r50w_throughput}{{7a}{10}}
+\newlabel{sub@fig:50r50w_throughput}{{a}{10}}
+\newlabel{fig:50scan50w_throughput}{{7b}{10}}
+\newlabel{sub@fig:50scan50w_throughput}{{b}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \bf  {Throughput in mixed workloads. }\relax }}{10}}
+\newlabel{fig:mixed}{{7}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \bf  {Mixed reads and writes benefit from memory component size with 8 threads. {cLSM\/} successfully exploits RAM buffers of up to 512MB, whereas {LevelDB} can only exploit 16MB. }\relax }}{10}}
+\newlabel{fig:50r50w_buffer}{{8}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \bf  {Read-modify-write (RMW) throughput -- a 100\% put-if-absent scenario with locality. {cLSM\/} improves upon lock-striping by 150\%.}\relax }}{10}}
+\newlabel{fig:100rmw_throughput}{{9}{10}}
+\citation{RocksDBBenchmarks}
+\citation{RocksDBBenchmarks}
+\citation{RocksDBBenchmarks}
+\citation{RocksDBBenchmarks}
+\citation{Bentley79}
+\citation{O'Neil1996}
+\citation{Muth1998}
+\citation{Pugh90}
+\newlabel{fig:prodA}{{10a}{11}}
+\newlabel{sub@fig:prodA}{{a}{11}}
+\newlabel{fig:prodB}{{10b}{11}}
+\newlabel{sub@fig:prodB}{{b}{11}}
+\newlabel{fig:prodD}{{10c}{11}}
+\newlabel{sub@fig:prodD}{{c}{11}}
+\newlabel{fig:prodE}{{10d}{11}}
+\newlabel{sub@fig:prodE}{{d}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces \bf  { Throughput in workloads collected from a production web-scale system. }\relax }}{11}}
+\newlabel{fig:production}{{10}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Workloads with Heavy Disk-Compaction}{11}}
+\newlabel{sec:heavyCompaction}{{5.3}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Related Work}{11}}
+\newlabel{sec:related}{{6}{11}}
+\citation{Bigtable2006,PNUTS2008,hbase,Lakshman2010,RocksDB}
+\citation{leveldb}
+\citation{HyperLevelDB}
+\citation{Hyperdex2012}
+\citation{RocksDB}
+\citation{RocksDBReduceLocks,RocksDBOptimizedLocks}
+\citation{BLSM2012}
+\citation{Li2010}
+\citation{Chazelle86}
+\citation{FDPlus2012}
+\citation{LevandoskiLS13}
+\citation{Lehman1981}
+\citation{RosenblumO1992}
+\bibstyle{acm-nice}
+\bibdata{clsm}
+\bibcite{libcds}{{1}{}{{}}{{}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces \bf  {Workload with heavy disk-compaction.}\relax }}{12}}
+\newlabel{fig:HeavyCompactions}{{11}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{12}}
+\newlabel{sec:discussion}{{7}{12}}
+\bibcite{hbase}{{2}{}{{}}{{}}}
+\bibcite{RocksDBOptimizedLocks}{{3}{}{{}}{{}}}
+\bibcite{leveldb}{{4}{}{{}}{{}}}
+\bibcite{HyperLevelDB}{{5}{}{{}}{{}}}
+\bibcite{hyperdex}{{6}{}{{}}{{}}}
+\bibcite{ConcurrentSkipListMap}{{7}{}{{}}{{}}}
+\bibcite{RocksDB}{{8}{}{{}}{{}}}
+\bibcite{RocksDBReduceLocks}{{9}{}{{}}{{}}}
+\bibcite{RocksDBBenchmarks}{{10}{}{{}}{{}}}
+\bibcite{hbaseRegionArch}{{11}{}{{}}{{}}}
+\bibcite{FBMessaging2012}{{12}{}{{}}{{}}}
+\bibcite{Bentley79}{{13}{}{{}}{{}}}
+\bibcite{Bloom1970}{{14}{}{{}}{{}}}
+\bibcite{bronson2010practical}{{15}{}{{}}{{}}}
+\bibcite{Bigtable2006}{{16}{}{{}}{{}}}
+\bibcite{Chazelle86}{{17}{}{{}}{{}}}
+\bibcite{PNUTS2008}{{18}{}{{}}{{}}}
+\bibcite{Dynamo07}{{19}{}{{}}{{}}}
+\bibcite{ConcurrencyInWindows2008}{{20}{}{{}}{{}}}
+\bibcite{Hyperdex2012}{{21}{}{{}}{{}}}
+\bibcite{GrayTP1993}{{22}{}{{}}{{}}}
+\bibcite{Herlihy2008}{{23}{}{{}}{{}}}
+\bibcite{Herlihy:1990}{{24}{}{{}}{{}}}
+\bibcite{Lakshman2010}{{25}{}{{}}{{}}}
+\bibcite{Lehman1981}{{26}{}{{}}{{}}}
+\bibcite{LevandoskiLS13}{{27}{}{{}}{{}}}
+\bibcite{Li2010}{{28}{}{{}}{{}}}
+\bibcite{michael2004scalable}{{29}{}{{}}{{}}}
+\bibcite{Muth1998}{{30}{}{{}}{{}}}
+\bibcite{O'Neil1996}{{31}{}{{}}{{}}}
+\bibcite{Papadimitriou1979}{{32}{}{{}}{{}}}
+\bibcite{Percolator2010}{{33}{}{{}}{{}}}
+\bibcite{Pugh90}{{34}{}{{}}{{}}}
+\bibcite{RosenblumO1992}{{35}{}{{}}{{}}}
+\bibcite{BLSM2012}{{36}{}{{}}{{}}}
+\bibcite{shacham2014verifying}{{37}{}{{}}{{}}}
+\bibcite{Tanenbaum:2014:MOS}{{38}{}{{}}{{}}}
+\bibcite{FDPlus2012}{{39}{}{{}}{{}}}
+\bibcite{Wu:2012:AWB}{{40}{}{{}}{{}}}
+\bibcite{Omid2014}{{41}{}{{}}{{}}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\newlabel{sigplanconf@finalpage}{{7}{14}}

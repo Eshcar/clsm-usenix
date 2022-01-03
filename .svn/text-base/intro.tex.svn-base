@@ -1,0 +1,82 @@
+\section{Introduction}
+\label{sec:intro}
+
+% NoSQL databases rock
+Over the last decade, NoSQL databases~\cite{Bigtable2006, PNUTS2008}  have become prevalent for real-time serving 
+of Internet-scale data stores. For example, the major personalized media and ad services on the Web are backed by 
+gigantic user profile stores that serve the data of more than 1B users within milliseconds per request.  For applications, 
+a NoSQL database is a persistent map with atomic read and write access to data items identified by unique keys. This 
+simple model allows scaling the data horizontally across multiple machines, with few operational limits. A unit of data 
+management  is typically called {\em tablet}~\cite{Bigtable2006}. The database is comprised of multiple tablet servers, 
+each exclusively controlling one or more tablets.
+ 
+% Vertical scalability
+%The tablet server's latency determines the client's interactive experience, whereas its throughput defines the system's capacity. 
+Modern NoSQL applications expect memory-speed performance without giving up on data durability. For example, latency is 
+critical for digital advertising exchanges -- if they fall beyond the SLA they lose money because buyers cannot bid on available ads.
+On the other hand, the ad relevance (and consequently, the revenue) depends on the availability and consistency of the user data. 
+In this context, tablet servers must be geared for vert high rates of reads (for relevance computation) as well as writes (for user
+activity recording). In contrast with the database applications of the previous decades, NoSQL workloads are extremely
+write-intensive. 
+
+%Over time, NoSQL stores started exposing more complex API's (e.g., snapshot scans for analytics, read-modify-writes
+%for replica reconciliation~\cite{PNUTS2008}, and even transaction support~\cite{Percolator2010}). However, the 
+%key-value interface remains their essence.
+ 
+% LSM trees
+Write-efficient data store implementations (e.g., log-sequenced merge, or LSM, trees) have been known to 
+the database community since mid-1990's~\cite{O'Neil1996}. The centerpiece idea behind them is absorbing 
+large batches of writes in a RAM buffer that is merged with a (substantially larger) persistent data store upon 
+spillover. The on-disk data is a collection of immutable (write-once-read-many) files. The merger process 
+is called {\em compaction\/} since it strives to keep the number of files small. This design replaces 
+frequent random writes by infrequent sequential writes, which performs much faster for both magnetic and 
+solid-state drives. Effectively, LSM trees shift the performance bottleneck from disk to memory,  masking the 
+persistent storage latencies from the end user. In addition, they are friendly to SSD storage, which 
+sustains a limited number of rewrites per disk block, and therefore does not suffer random updates. Popular LSM
+tree implementations, e.g., \leveldb\footnote{\small{\url{https://code.google.com/p/leveldb/}}}, are a design of choice 
+in multiple NoSQL systems. 
+
+The implementation of the memory-resident LSM tree component (typically called {\em memtable\/}) is critical for the 
+system's performance. The primary challenge is scaling up with the available hardware resources -- in particular,
+the number of CPU cores. Similarly to all systems that capitalize on internal parallelism, the concurrency control 
+mechanisms that protect the shared data structures become the major performance roadblock. For example, 
+the overhead incurred by traditional lock-based concurrency control is well understood. Jones et. al.~\cite{Abadi2010} 
+claim that $42\%$ of SQL database latency under TPC-C workloads can be attributed to locking. In this context,
+the lock-free and wait-free data structures explored the by the parallel computing  community~\cite{Herlihy2008} 
+bear a significant promise for database performance optimization.
+
+Concurrent implementations of many abstract data types (ADT's) are becoming increasingly popular, by the virtue 
+of their theoretical and practical performance guarantees. For example, multiple C++ and Java development kits
+implement ADT's described by see Herlihy and Shavit's seminal survey~\cite{Herlihy2008}.  However, applying them 
+in database systems context is not straightforward, which happens for two reasons. First, database systems typically
+offer richer API's than simple ADT's. Second, the need to co-manage volatile and persistent data complicates the
+design. In this context, the challenges are either safety  (e.g., the ADT's atomicity is insufficient for operations that 
+also access the disk) or performance (e.g., the ADT's benefits are annihilated by locks used elsewhere). 
+ 
+We present {\clsm} (pronounced: Colosseum) -- an efficient concurrent LSM-tree implementation. It features 
+(1) atomic reads and writes, (2) atomic read-modify-writes (RMW, serving multisite update reconciliation~\cite{PNUTS2008, 
+Dynamo07}), and (3) snapshots (serving online analytics~\cite{Bigtable2006} and snapshot-isolation transactions~\cite{Omid2012}).
+
+The foundation of {\clsm}'s memtable is a lock-free skip list~\cite{Herlihy2008}. We modify its internals to support 
+atomic RMW, in addition to reads and writes. The execution remains non-blocking as long as no I/O is entailed (note 
+that RMW might resort to disk read if the key value is not present in RAM).  The implementation, which leverages 
+the concurrent skip list's design philosophy, is nontrivial. Snapshot scans are an add-on layer on top of the memtable. 
+In order to establish snapshots reliably, the algorithm tracks the in-progress writes in a lookaside lock-free set.   
+Its composition with the underlying skip list is non-blocking, and provably atomic. 
+
+To achieve predictable operation latencies, {\clsm} reduces the contention between the API serving and the 
+concurrent background compaction to an extremely lightweight lock that protects critical reference swapping. 
+It is amenable to any optimization that strives to reduce the overall impact of compaction, e.g., 
+{\rocksdb}\footnote{\footnotesize{\url{http://rocksdb.org}}}.
+ 
+% Evaluation
+A working prototype of {\clsm} is implemented based on {\leveldb}, a state-of-the-art NoSQL backend. We compare 
+its performance to {\leveldb} and other research prototypes, on production multicore hardware, under a wealth 
+of real-time and analytics traffic blends. In all the scenarios in which most of the operations can be served off-RAM, 
+\clsm's dominance is uncompromised. For example, in write-only scenarios the throughput gap is 4X, whereas
+the $95\%$ latency is $60\%$ faster. In read-dominated scenarios, the throughput gap is still 2X compared to the best
+competitor. The native RMW implementation is much faster than a naive one based on lock striping~\cite{GrayTP1993}.  
+Finally, {\clsm} efficiently separates the real-time and analytics workloads -- its per-CPU performance is unaffected 
+by background disk scans. These results manifest consistently across magnetic and flash storage. 
+
+The rest of this paper is structured as follows ...

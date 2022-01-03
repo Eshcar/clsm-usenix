@@ -1,0 +1,129 @@
+\section{Algorithm}
+\label{sec:algorithm}
+
+\guy{working on this section}
+
+
+
+\subsection{Shared Components}
+
+Each component $c_i$ is an \emph{ordered set} of tuples $\tuple{\key,\ts,\val}$
+where $\key$ is a key, $\ts$ is a timestamp, and $\val$ is a value.
+The timestamp of a tuple $T$ represents the time when $T$ was added to the LSM-tree;
+our algorithm ensures that each tuple has a unique timestamp.
+
+
+\paragraph{Order of Tuples.}
+We write $\leq_i$ to denote the order of the tuples in component $c_i$;
+this order is used for implementing lookups, snapshots and the iteration functionality (described later).  
+Each order $\leq_i$ satisfies the following conditions:
+~(i) tuples with different keys are ordered according to a total order of the keys (defined by the client of the LSM-Tree);
+~(ii) tuples with identical keys are ordered according to their timestamps.
+In other words, if $\tuple{\key,\ts,\val} \leq_i  \tuple{\key',\ts',\val'}$ then either $\key < \key'$ or $\key = \key' \wedge \ts \leq \ts'$.
+
+\paragraph{In-memory Components.}
+The in-memory components are implemented as standard (ram-based) data structures.
+An in-memory component supports the following functionality
+\begin{itemize}
+  \item The method \emph{insert} is used to add new tuples to the component.
+  Normally, an invocation of \emph{insert($\tuple{\key,\ts,\val}$)} adds the tuple $\tuple{\key,\ts,\val}$ and returns $\OK$.
+  Such invocation fails if the component already consumes (ay least) $\LimitSize$ bytes of memory
+  ($\LimitSize$ is a numeric parameter defined by the client of the LSM-Tree),
+  in this case the the tuple is not added and the method returns $FULL$ (an indication that new tuples cannot be added to this component).
+  %
+  \item The method \emph{get} is used to read a tuple that belongs to a specific timestamp.
+  An invocation of \emph{get($\key,\ts$)} returns the maximal tuple $\tuple{k,t,v}$ such that $k=key$ and $t \leq ts$;
+  if such a tuple does not exist, it returns $\NONE$.
+  %
+  \item \emph{Iterator}: enables traversing over all the tuples in the order defined by $\leq_i$.
+  %
+  \item \emph{Thread safety}:
+  Several threads are permitted to simultaneously use the component:
+  but each method invocation appears to execute atomically (as defined in~\cite{xxxx}).
+  The iterator provides \emph{weak-consistency} (as in~\cite{xxx}):
+  it returns tuples reflecting the state of the component at some point at or since the beginning of the iteration.
+\end{itemize}
+
+Our in-memory components are similar to the $leveldb$'s in-memory components.
+But, in contrast to $leveldb$, we permit parallel executions of several \emph{insert} operations
+(this enables our algorithm to provide scalable write-operations).
+
+We have implemented the in-memory components by using the lock-free ordered-skip-list from~\cite{xxxx}
+(based on the algorithm presented in \cite{xxx}).
+Our implementation relies on the fact that this skip-list's iterator provides \emph{weak-consistency} as long as elements are never removed from the skip-list
+(our algorithm does not remove elements from a component while it is being used).
+
+In-memory components with the above functionality can be implemented
+(in a straightforward way) by relying of other concurrent data structures (e.g.,~\cite{xxxx,xxxx}).
+\TODO{GG: consider to add details (maybe in an appendix).}
+%The above functionality can be realized, in a straightforward way, by relying of several other concurrent data structures, for example \cite{xxx}.
+
+\paragraph{Disk-Based Components.}
+The disk-based components are implemented as data structures that store the content of the tuples in the file-system.
+A disk-based component is a read-only data structure: it is never updated after its creation.
+It supports the method \emph{get} and an iterator (exactly as in the in-memory component).
+For a disk-based component, thread-safety is simple since it is a read-only data structure.
+
+In our implementation we have used the disk-based components  from the $\leveldb$ implementation.
+%This enable us to use the "merge" (TBD) implemented in $\leveldb$.
+
+%TODO: caching ?
+
+\paragraph{Components Vector.}
+The \emph{components vector} is a shared object that represents a vector of pointers $\tuple{p_1,\ldots,p_k}$
+where each $p_i$ points to a shared component (denoted by $\overline{p_i}$).
+%
+For every $i < j$, the tuples in $\overline{p_i}$ are more recent than the tuples in $\overline{p_j}$
+(that is, the timetags in $\overline{p_i}$ are larger than the ones in $\overline{p_j}$).
+
+%The first component $\overline{p_1}$ is always an in-memory component, all new tuples are inserted to $\overline{p_1}$;
+%the subsequent components $\overline{p_2},\ldots,\overline{p_k}$ are read-only.
+%%
+%Normally $\overline{p_2},\ldots,\overline{p_k}$ are disk-based components;
+%only when the merge-process is executing $\overline{p_2}$ may be an in-memory component (described later).
+
+The first component $\overline{p_1}$ is always an in-memory component, all new tuples are inserted to $\overline{p_1}$;
+the subsequent components $\overline{p_2},\ldots,\overline{p_k}$ are never mutated by our algorithm.
+Components $\overline{p_3},\ldots,\overline{p_k}$ are always disk-based components;
+$\overline{p_2}$ is either an in-memory or a disk-based component.
+
+\paragraph{Global Read-Write Lock.}
+Our algorithm's synchronization  utilizes a single global read-write lock.
+This lock is used for two purposes:
+~(1) to protect accesses to the components vector itself;
+~(2) to make sure that only $\overline{p_1}$ may be updated (i.e., tuples are never inserted to $\overline{p_2}$).
+
+\TODO{explain that, in a sense, the read-write lock is "lock-free"}
+
+
+\subsection{The Basic Algorithm}
+
+In this section we describe the basic parts of our algorithm.
+The relevant pseudo-code appears in \figref{xxxx}.
+
+\paragraph{PUT}
+The \emph{PUT} method (lines XX-XX) gets a key $\key$ and a value $\val$,
+and inserts the  tuple $\tuple{\key,\ts,\val}$ to the LSM-Tree where $\ts$ is a unique timetag that represents the current time.
+In line XX, the method generates the timestamp and store it in $\ts$.
+In lines XX-XX the tuple $\tuple{\key,\ts,\val}$ is inserted to $\overline{p_1}$.
+%
+If the \emph{insert} method return FULL, then the merge-process is requested and the PUT operation is restarted (lines XX-XX).
+%
+%The RWL lock (lines XX,XX) and the \emph{ReleaseTime} method are explained later.
+
+The \emph{PUT} method can be simultaneously executed by several concurrent threads.
+The atomicity of $\overline{p_1}$ protects the content of $\overline{p_1}$;
+the RWL lock is used to protect the content of the components vector and to ensure that only the first component (the one pointed by $p_1$) may be updated (explained bellow).
+
+\paragraph{MERGE}
+\demonsmarker
+The MERGE procedure executes the merge-process, its aim is to merge the first (in-memory) components to the disk-based components.
+This procedure is always invoked by a single thread.
+
+Line XX allocates a new empty in-memory components $c_1'$.
+In lines XX-XX, $c_1'$ becomes the new first component, and $c_1$
+
+
+
+
+\input{pseudoCode1}

@@ -1,0 +1,52 @@
+\section{Implementation}
+\label{sec:impl}
+
+We implement \clsm\ in C++ based on the popular open source {\leveldb} LSM-DS library~\cite{leveldb}.
+{\leveldb} is used by numerous applications including Google Chrome and
+Facebook's embeddable  key-value store~\cite{RocksDB}.
+%Facebook's distributed key-value store back-end (RocksDB~\cite{RocksDB}).
+
+{\leveldb\/} implements a rich API that includes read (get), write (put), and various snapshot operations.
+Its memory component is implemented as a skip list with custom concurrency control.
+%{\leveldb\/} is durable -- i.e.,
+Every write is logged to a sequential
+file following the LSM-DS update. Typically, the data store is configured to perform logging asynchronously,
+which allows writes to occur at memory speed; hence, a write only queues the request for logging and a handful of writes may be lost due to a crash.
+{\leveldb\/} features a number of optimizations, including multilevel merge, custom memory allocation,
+caching via memory-mapped I/O,  Bloom filters~\cite{Bloom1970} to speed up reads, etc.
+
+The original {\leveldb\/} acquires a global exclusive lock to protect critical sections at the beginning
+and the end of each read and write. The bulk of the code is guarded by a mechanism
+that allows a single writer thread and multiple reader threads to execute at any given time.
+Snapshots are implemented using timestamps -- the timestamp management is simpler than ours (i.e., no  need for \emph{Active} set) since concurrent write operations are not permitted.
+{\leveldb\/} supports an atomic batch of write operations that is implemented using coarse-grained synchronization of simple write operations.
+%\Idit{Please say how snapshots are implemented-- does it use a \emph{timeCounter} like we do?
+%Does it use a lock to avoid the need for \emph{Active}? What about atomic batch operations?}
+
+{\clsm\/} supports the full functionality of {\leveldb}'s API.
+Its implementation inherits the core of {\leveldb}'s modules (disk component, cache, merge function, etc), and benefits
+from the same optimizations.
+It implements the algorithm described in Section~\ref{sec:algorithm}, which eliminates the blocking parts of the
+{\leveldb\/} code.
+Our support for atomic batches of write operations continues to block (similarly to the original {\leveldb\/}) --
+its synchronization is implemented by holding the shared-exclusive lock in exclusive mode.
+
+We harness the \emph{libcds} concurrent data structures' library~\cite{libcds}
+to implement the in-memory store and the logging queue (via the non-blocking skip list and queue implementations, respectively).
+We also implement multiple custom tools based
+on atomic hardware instructions: a shared-exclusive lock, and a non-blocking memory allocator~\cite{michael2004scalable}.
+%, and non-blocking timestamp and reference counters.
+\eurosys{I6}{All accesses we add to shared memory are protected by memory
+fences, whereas the libraries we use include fences where deemed necessary by their developers.}
+
+%The RMW abstraction is not supported by {\leveldb\/} originally. {\clsm\/} implements its popular put-if-absent
+%variation~\cite{Herlihy2008}, based on our algorithm. To establish a comparison baseline, we augment {\leveldb\/}
+%with a textbook \emph{lock-striping} implementation~\cite{GrayTP1993} (Section~\ref{sec:eval}).
+
+Relaxing {\leveldb}'s single-writer constraint implies that writes might get logged out of order.
+Since all the log records bear {\clsm}-generated timestamps, the correct order is easily
+restored upon recovery.
+
+%The RMW abstraction is not supported by {\leveldb\/} originally.
+%To establish a comparison baseline, we augment {\leveldb\/}
+%with a textbook \emph{lock-striping} implementation~\cite{GrayTP1993} (Section~\ref{sec:eval}).

@@ -1,0 +1,145 @@
+%% $Id: genericmacros.tex,v 1.1 2008/11/06 22:41:17 eyahav Exp $
+% Generic macros (nothing specific to this paper)
+
+\usepackage{ifthen}
+\usepackage{multirow}
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Terminology                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\demonsmarker}{\textbf{\color{blue} DEMONS START HERE IF NOT EARLIER}}
+
+%\newcommand{\scode}[1]{{ \texttt{#1}}}
+%\newcommand{\sname}[1]{{\small \textsc{#1}}}
+
+\newcommand{\TODO}[1]{{{\color{blue}{\bf #1}} }}
+\newcommand{\TODOFN}[1]{ \footnote{{\bf #1}} }
+\newcommand{\DONE}[1]{}
+\newcommand{\COMMENT}[1]{}
+\newcommand{\ie}{i.e.}
+\newcommand{\eg}{e.g.}
+%%% references definition
+\newcommand{\lnref}[1]{Line~\ref{Ln:#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{Lm:#1}}
+\newcommand{\figref}[1]{Figure~\ref{Fi:#1}}
+\renewcommand{\algref}[1]{Algorithm~\ref{Al:#1}}
+\newcommand{\defref}[1]{Definition~\ref{De:#1}}
+\newcommand{\theref}[1]{Theorem~\ref{Th:#1}}
+\newcommand{\tabref}[1]{Table~\ref{Ta:#1}}
+\newcommand{\secref}[1]{Section~\ref{Se:#1}}
+\newcommand{\secrefs}[2]{Sections~\ref{Se:#1}-\ref{Se:#2}}
+\newcommand{\ssecref}[1]{Section~\ref{Se:#1}}
+\newcommand{\appref}[1]{Appendix~\ref{Se:#1}}
+\newcommand{\exref}[1]{Example~\ref{Ex:#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{Ch:#1}}
+\newcommand{\equref}[1]{Equation~\ref{Eq:#1}}
+\newcommand{\corref}[1]{Corollary~\ref{Co:#1}}
+
+\newcommand{\lemlabel}[1]{\label{Lm:#1}}
+\newcommand{\figlabel}[1]{\label{Fi:#1}}
+\newcommand{\deflabel}[1]{\label{De:#1}}
+\newcommand{\thelabel}[1]{\label{Th:#1}}
+\newcommand{\tablabel}[1]{\label{Ta:#1}}
+\newcommand{\seclabel}[1]{\label{Se:#1}}
+\newcommand{\sseclabel}[1]{\label{Se:#1}}
+\newcommand{\applabel}[1]{\label{Se:#1}}
+\newcommand{\exlabel}[1]{\label{Ex:#1}}
+
+%%\newtheorem{Examp}{Example}
+\newtheorem{definition}{Definition}
+%%% sectioning
+
+
+\newcounter{programlinenumber}
+\newenvironment{pgm}
+     {\tt%
+       \begin{tabbing}%
+       123\=123\=123\=123\=123\=123\=123\=123\=123\=123\=123\=123\=\kill%
+       \setcounter{programlinenumber}{0}%
+     }
+     {\end{tabbing}}
+\newcommand{\nl}{\addtocounter{programlinenumber}{1}[\arabic{programlinenumber}] \> }
+\newcommand{\nonl}{}%
+\newenvironment{narrowpgm}
+     {\tt%
+       \begin{tabbing}%
+       12\=12\=12\=12\=12\=12\=12\=12\=12\=12\=12\=12\=\kill%
+       \setcounter{programlinenumber}{0}%
+     }
+     {\end{tabbing}}
+
+\newenvironment{basenarrowpgm}
+     {\tt%
+       \begin{tabbing}%
+       \=12\=12\=12\=12\=12\=12\=12\=12\=12\=12\=12\=12\=\kill%
+       \setcounter{programlinenumber}{0}%
+     }
+     {\end{tabbing}}
+
+
+\newenvironment{xbasenarrowpgm}
+     {\tt%
+       \begin{tabbing}%
+       1\=1\=1\=1\=1\=1\=1\=1\=1\=1\=1\=1\=1\=\kill%
+       \setcounter{programlinenumber}{0}%
+     }
+     {\end{tabbing}}
+
+%% if statement
+\newcommand{\ifthen}[3]{
+ \left\{
+      \begin{array}{ll}
+        #2 & #1 \\
+        #3 & {\rm otherwise}
+      \end{array}
+      \right.
+ }
+
+%% TO Allow writing the TR in the same source
+\newboolean{TR}
+\setboolean{TR}{false}
+\ifthenelse{\boolean{TR}}{
+\newcommand{\TrSelect}[2]{#1}
+\newcommand{\TrOnly}[1]{#1}
+\newcommand{\SubOnly}[1]{}
+\newcommand{\TrOnlyInFootnote}[1]{#1}
+\newcommand{\TrOnlyInTable}[1]{#1}}
+{
+\newcommand{\TrSelect}[2]{#2}
+\newcommand{\TrOnly}[1]{}
+\newcommand{\SubOnly}[1]{#1}
+\newcommand{\TrOnlyInFootnote}[1]{}
+\newcommand{\TrOnlyInTable}[1]{}}
+
+
+
+%% General macros
+\newcommand{\Set}[1]{\{ \; {#1} \; \}}
+\newcommand{\vbar}{\; | \;}
+\newcommand{\notIn}{\not\in}
+\newcommand{\sizeof}[1]{|{#1}|}
+%% \newcommand{\isDefined}{=_{def}}
+\newcommand{\isDefined}{\triangleq}
+
+\newcommand{\lt}{$<$}
+\newcommand{\gt}{$>$}
+
+%% tminus: "thin minus", with less space around it;
+%% telem: "thin element"
+\newcommand{\tminus}{\!\! - \!\!}
+\newcommand{\telem}{\! \in \!}
+
+%% stexttt: "small" texttt
+\newcommand{\stexttt}[1]{{\small \texttt{#1}}}
+
+\newcommand{\mathify}[1]{\mathord{\mbox{#1}}}
+\newcommand{\italMathId}[1]{\mathify{\textit{\textrm{#1}}}}
+\newcommand{\romanMathId}[1]{\mathify{\textup{\textrm{#1}}}}
+\newcommand{\ttMathId}[1]{\mathify{\textup{\texttt{#1}}}}
+
+\newcommand{\ttsub}[2]{${\ttMathId{#1}}_{#2}$}
+\newcommand{\ttsup}[2]{${\ttMathId{#1}}^{#2}$}
+\newcommand{\mttsub}[2]{{\ttMathId{#1}}_{#2}}
+\newcommand{\twoarray[2]}{\begin{array}{l}  #1 \\ #2 \end{array}}
+\newcommand{\subsubsubsection}[1]{\emph{#1}:}

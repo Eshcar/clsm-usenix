@@ -1,0 +1,212 @@
+\begin{thebibliography}{10}
+
+\bibitem{libcds}
+libcds: Library of lock-free and fine-grained algorithms.
+\newblock \url{http://libcds.sourceforge.net/}, Nov. 2013.
+
+\bibitem{hbase}
+Apache hbase, a distributed, scalable, big data store.
+\newblock \url{http://hbase.apache.org/}, Apr. 2014.
+
+\bibitem{RocksDBOptimizedLocks}
+Avoid expensive locks in {RocksDB}.
+\newblock \url{http://rocksdb.org/blog/677/avoid-expensive-locks-in-get/}, June
+  2014.
+
+\bibitem{leveldb}
+A fast and lightweight key/value database library by google.
+\newblock \url{http://code.google.com/p/leveldb}, Jan. 2014.
+
+\bibitem{HyperLevelDB}
+Hyperleveldb.
+\newblock \url{https://github.com/rescrv/HyperLevelDB}, Apr. 2014.
+
+\bibitem{hyperdex}
+Hyperleveldb performance benchmarks.
+\newblock \url{http://hyperdex.org/performance/leveldb}, Apr. 2014.
+
+\bibitem{ConcurrentSkipListMap}
+Java's {C}oncurrent{S}kip{L}ist{M}ap.
+\newblock
+  \url{http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentSkipListMap.html},
+  Apr. 2014.
+
+\bibitem{RocksDB}
+A persistent key-value store for fast storage environments.
+\newblock \url{http://rocksdb.org/}, June 2014.
+
+\bibitem{RocksDBReduceLocks}
+Reducing lock contention in {RocksDB}.
+\newblock \url{http://rocksdb.org/blog/521/lock/}, May 2014.
+
+\bibitem{RocksDBBenchmarks}
+{RocksDB} performance benchmarks.
+\newblock
+  \url{https://github.com/facebook/rocksdb/wiki/Performance-Benchmarks}, May
+  2014.
+
+\bibitem{hbaseRegionArch}
+Why cannot {I} have too many regions?
+\newblock \url{https://hbase.apache.org/book/regions.arch.html}, Apr. 2014.
+
+\bibitem{FBMessaging2012}
+{\sc Aiyer, A., Bautin, M., Chen, G., Damania, P., Khemani, P., Muthukkaruppan,
+  P., Ranganathan, K., Spiegelberg, N., Tang, L., and Vaidya, M.}
+\newblock {Storage Infrastructure Behind Facebook Messages: Using HBase at
+  Scale}.
+\newblock {\em {IEEE Data Eng. Bull} 35\/} (2012), 4--13.
+
+\bibitem{Bentley79}
+{\sc Bentley, J.~L., and Saxe, J.~B.}
+\newblock Decomposable searching problems i. static-to-dynamic transformation.
+\newblock {\em Journal of Algorithms 1}, 4 (1980), 301--358.
+
+\bibitem{Bloom1970}
+{\sc Bloom, B.~H.}
+\newblock Space/time trade-offs in hash coding with allowable errors.
+\newblock {\em Commun. ACM 13}, 7 (July 1970), 422--426.
+
+\bibitem{bronson2010practical}
+{\sc Bronson, N.~G., Casper, J., Chafi, H., and Olukotun, K.}
+\newblock A practical concurrent binary search tree.
+\newblock {\em SIGPLAN Not. 45}, 5 (2010), 257--268.
+
+\bibitem{Bigtable2006}
+{\sc Chang, F., Dean, J., Ghemawat, S., Hsieh, W.~C., Wallach, D.~A., Burrows,
+  M., Chandra, T., Fikes, A., and Gruber, R.~E.}
+\newblock Bigtable: A distributed storage system for structured data.
+\newblock In {\em OSDI\/} (2006).
+
+\bibitem{Chazelle86}
+{\sc Chazelle, B., and Guibas, L.~J.}
+\newblock Fractional cascading: I. a data structuring technique.
+\newblock {\em Algorithmica 1}, 2 (1986), 133--162.
+
+\bibitem{PNUTS2008}
+{\sc Cooper, B.~F., Ramakrishnan, R., Srivastava, U., Silberstein, A.,
+  Bohannon, P., Jacobsen, H.-A., Puz, N., Weaver, D., and Yerneni, R.}
+\newblock Pnuts: Yahoo!'s hosted data serving platform.
+\newblock {\em Proc. VLDB Endow. 1}, 2 (2008), 1277--1288.
+
+\bibitem{Dynamo07}
+{\sc DeCandia, G., Hastorun, D., Jampani, M., Kakulapati, G., Lakshman, A.,
+  Pilchin, A., Sivasubramanian, S., Vosshall, P., and Vogels, W.}
+\newblock Dynamo: Amazon's highly available key-value store.
+\newblock In {\em SOSP\/} (2007), pp.~205--220.
+
+\bibitem{ConcurrencyInWindows2008}
+{\sc Duffy, J.}
+\newblock {\em Concurrent Programming on Windows}.
+\newblock Addison-Wesley, 2008.
+
+\bibitem{Hyperdex2012}
+{\sc Escriva, R., Wong, B., and Sirer, E.~G.}
+\newblock Hyperdex: a distributed, searchable key-value store.
+\newblock In {\em SIGCOMM 2012\/} (2012), pp.~25--36.
+
+\bibitem{GrayTP1993}
+{\sc Gray, J., and Reuters, A.}
+\newblock {\em Transaction Processing: Concepts and Techniques}.
+\newblock Morgan Kaufmann, 1993.
+
+\bibitem{Herlihy2008}
+{\sc Herlihy, M., and Shavit, N.}
+\newblock {\em The Art of Multiprocessor Programming}.
+\newblock Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 2008.
+
+\bibitem{Herlihy:1990}
+{\sc Herlihy, M.~P., and Wing, J.~M.}
+\newblock Linearizability: A correctness condition for concurrent objects.
+\newblock {\em TOPLAS 12\/} (1990).
+
+\bibitem{Lakshman2010}
+{\sc Lakshman, A., and Malik, P.}
+\newblock Cassandra: A decentralized structured storage system.
+\newblock {\em SIGOPS Oper. Syst. Rev. 44}, 2 (Apr. 2010), 35--40.
+
+\bibitem{Lehman1981}
+{\sc Lehman, P.~L., and Yao, s.~B.}
+\newblock Efficient locking for concurrent operations on b-trees.
+\newblock {\em ACM Trans. Database Syst. 6}, 4 (1981), 650--670.
+
+\bibitem{LevandoskiLS13}
+{\sc Levandoski, J.~J., Lomet, D.~B., and Sengupta, S.}
+\newblock The {B}w-tree: A {B}-tree for new hardware platforms.
+\newblock In {\em 29th IEEE International Conference on Data Engineering
+  ({ICDE})\/} (2013), pp.~302--313.
+
+\bibitem{Li2010}
+{\sc Li, Y., He, B., Yang, R.~J., Luo, Q., and Yi, K.}
+\newblock Tree indexing on solid state drives.
+\newblock {\em Proc. VLDB Endow. 3}, 1-2 (2010), 1195--1206.
+
+\bibitem{michael2004scalable}
+{\sc Michael, M.~M.}
+\newblock Scalable lock-free dynamic memory allocation.
+\newblock {\em SIGPLAN Not. 39}, 6 (2004), 35--46.
+
+\bibitem{Muth1998}
+{\sc Muth, P., O'Neil, P.~E., Pick, A., and Weikum, G.}
+\newblock Design, implementation, and performance of the lham log-structured
+  history data access method.
+\newblock In {\em Proceedings of the 24rd International Conference on Very
+  Large Data Bases\/} (1998), VLDB '98, pp.~452--463.
+
+\bibitem{O'Neil1996}
+{\sc O'Neil, P., Cheng, E., Gawlick, D., and O'Neil, E.}
+\newblock The log-structured merge-tree ({LSM}-tree).
+\newblock {\em Acta Inf. 33}, 4 (June 1996), 351--385.
+
+\bibitem{Papadimitriou1979}
+{\sc Papadimitriou, C.~H.}
+\newblock The serializability of concurrent database updates.
+\newblock {\em J. ACM 26}, 4 (Oct. 1979), 631--653.
+
+\bibitem{Percolator2010}
+{\sc Peng, D., and Dabek, F.}
+\newblock Large-scale incremental processing using distributed transactions and
+  notifications.
+\newblock In {\em OSDI\/} (2010), pp.~4--6.
+
+\bibitem{Pugh90}
+{\sc Pugh, W.}
+\newblock Skip lists: A probabilistic alternative to balanced trees.
+\newblock {\em Commun. ACM 33}, 6 (1990), 668--676.
+
+\bibitem{RosenblumO1992}
+{\sc Rosenblum, M., and Ousterhout, J.~K.}
+\newblock The design and implementation of a log-structured file system.
+\newblock {\em ACM Trans. Comput. Syst. 10}, 1 (Feb. 1992), 26--52.
+
+\bibitem{BLSM2012}
+{\sc Sears, R., and Ramakrishnan, R.}
+\newblock b{LSM}: A general purpose log structured merge tree.
+\newblock In {\em SIGMOD 2012\/} (2012), pp.~217--228.
+
+\bibitem{shacham2014verifying}
+{\sc Shacham, O., Yahav, E., Golan-Gueta, G., Aiken, A., Bronson, N., Sagiv,
+  M., and Vechev, M.}
+\newblock Verifying atomicity via data independence.
+\newblock In {\em ISSTA\/} (2014).
+
+\bibitem{Tanenbaum:2014:MOS}
+{\sc Tanenbaum, A.~S., and Bos, H.}
+\newblock {\em Modern Operating Systems}, 4th~ed.
+\newblock Prentice Hall Press, Upper Saddle River, NJ, USA, 2014.
+
+\bibitem{FDPlus2012}
+{\sc Thonangi, R., Babu, S., and Yung, J.}
+\newblock A practical concurrent index for solid-state drives.
+\newblock In {\em CIKM 2012\/} (2012), pp.~1332--1341.
+
+\bibitem{Wu:2012:AWB}
+{\sc Wu, G., He, X., and Eckart, B.}
+\newblock An adaptive write buffer management scheme for flash-based ssds.
+\newblock {\em Trans. Storage 8}, 1 (Feb. 2012).
+
+\bibitem{Omid2014}
+{\sc Yabandeh, M., Gomez-Ferro, D., Kelly, I., Junqueira, F., and Reed, B.}
+\newblock Lock-free transactional support for distributed data stores.
+\newblock In {\em ICDE '14}.
+
+\end{thebibliography}

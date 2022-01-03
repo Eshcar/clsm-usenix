@@ -1,0 +1,41 @@
+\section{Discussion}
+\label{sec:discussion}
+
+Leading key-value stores today rely on LSM-DS methodology for serving requests mostly from RAM.
+With this approach, the implementation of in-memory building blocks is critical for performance, as we have demonstrated in Section~\ref{sec:eval}.
+The primary challenge such systems face is scaling up with the available hardware resources – most notably, the number of CPU cores.
+In this context, the concurrency control that protects shared data structures can be a major performance roadblock.
+Our work overcomes this roadblock and presents \clsm, an efficient concurrent LSM-DS implementation.
+Scalability is achieved  by eliminating blocking  in scenarios that do not involve physical access to disk.
+%Scalability is achieved  by eliminating blocking  in all scenarios that do not involve access to disk.
+
+In addition to atomic reads and writes, \clsm\ supports consistent snapshot scans, range queries, and atomic read-modify-write operations.
+Our algorithm is generic, and can be applied to a range of  implementations. Such decoupling allows our solution to be
+combined with other optimization applied to the disk components and merge utility.
+
+
+Our evaluation versus state-of-the-art LSM implementations shows performance improvements and superior scalability,
+even when the competitors utilize smaller partitions. The latter, along with other disadvantages of partitioning discussed
+in Section~\ref{sec:background}, suggests that our approach can potentially serve as an alternative for vertical scalability.
+
+
+%The implementation of in-memory building blocks is critical for the
+%performance of LSM-DS (as demonstrated in Section~\ref{sec:eval}). The primary challenge is scaling up with the available
+%hardware resources -- in particular, the number of CPU cores.
+%Similar to all systems that capitalize on internal parallelism, the concurrency control
+%that protect the shared data structures is either a major
+%performance roadblock or requires nontrivial mechanisms to guarantee the
+%overall correctness of the system.
+%In this work, we present an efficient concurrent LSM-DS implementation. It features atomic reads and
+%writes, snapshots, iterators and an additional atomic read-modify-writes. Our algorithm is
+%non-blocking in scenarios that do not involve access to disk.
+%The algorithm for supporting the basic key-value store API is generic and can be
+%applied to any implementation that does not exploit concurrency.
+%Furthermore, this decoupling allows our solution to be combined with
+%other optimization that are applied to the disk components and merge utility.
+%
+%Our evaluation versus state-of-the-art LSM implementations show performance
+%improvements and superior scalability, even when the competitors utilize
+%smaller partitions. This suggest that our concurrent algorithm can serve as an
+%alternative for gaining vertical scalability.
+

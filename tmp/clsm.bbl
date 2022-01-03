@@ -1,0 +1,36 @@
+\begin{thebibliography}{1}
+
+
+\bibitem{Bloom1970}
+B.~H. Bloom.
+\newblock Space/time trade-offs in hash coding with allowable errors.
+\newblock {\em Commun. ACM}, 13(7):422--426, July 1970.
+
+\bibitem{Hyperdex2012}
+R.~Escriva, B.~Wong, and E.~G. Sirer.
+\newblock Hyperdex: a distributed, searchable key-value store.
+\newblock In {\em SIGCOMM 2012}, pages 25--36, 2012.
+
+\bibitem{Muth1998}
+P.~Muth, P.~E. O'Neil, A.~Pick, and G.~Weikum.
+\newblock Design, implementation, and performance of the lham log-structured
+  history data access method.
+\newblock In {\em Proceedings of the 24rd International Conference on Very
+  Large Data Bases}, VLDB '98, pages 452--463, 1998.
+
+\bibitem{O'Neil1996}
+P.~O'Neil, E.~Cheng, D.~Gawlick, and E.~O'Neil.
+\newblock The log-structured merge-tree (lsm-tree).
+\newblock {\em Acta Inf.}, 33(4):351--385, June 1996.
+
+\bibitem{Pugh90}
+W.~Pugh.
+\newblock Skip lists: A probabilistic alternative to balanced trees.
+\newblock {\em Commun. ACM}, 33(6):668--676, 1990.
+
+\bibitem{BLSM2012}
+R.~Sears and R.~Ramakrishnan.
+\newblock blsm: A general purpose log structured merge tree.
+\newblock In {\em SIGMOD 2012}, pages 217--228, 2012.
+
+\end{thebibliography}

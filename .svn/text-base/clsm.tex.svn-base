@@ -1,0 +1,189 @@
+%\documentclass[preprint,10pt]{sigplanconf}
+\documentclass[10pt]{sigplanconf}
+
+\usepackage{times}
+
+
+\usepackage{graphicx,url,color}
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithmicx,algorithm}
+\usepackage{listings}
+\usepackage{paralist}
+\usepackage{amsmath}
+%\usepackage{caption}yes
+\usepackage[skip=0pt]{subcaption}
+%\usepackage[tight]{subfigure}
+%\usepackage{eepic}
+%\usepackage{dblfloatfix} % fix for bottom-placement of figure
+%\usepackage{perpage}
+\usepackage{balance}
+\usepackage{xcolor}
+
+\input{genericmacros}
+
+\newcommand{\inred}[1]{{\color{red}{#1}}}
+\newcommand{\newnote}[1]{\frameit{Note}{#1}}
+\newcommand{\todo}[1]{\frameit{To-do}{#1}}
+\newcommand{\microsec}{${\mu}$s}
+\newcommand{\scode}[1]{{\small \texttt{#1}}}
+\newcommand{\NULL}{\bot}
+
+
+\newcommand{\clsm}{cLSM}
+\newcommand{\leveldb}{LevelDB}
+\newcommand{\hyperleveldb}{HyperLevelDB}
+\newcommand{\rocksdb}{RocksDB}
+\newcommand{\blsm}{bLSM}
+\newcommand{\fdplus}{FD+}
+
+\newcommand{\inote}[1]{}
+\newcommand{\remove}[1]{}
+\newcommand{\frameit}[2]{
+    \begin{center}
+    {\color{red}
+    \framebox[3.3in][l]{
+        \begin{minipage}{3in}
+        \inred{#1}: {\sf\color{black}#2}
+        \end{minipage}
+    }\\
+    }
+    \end{center}
+}
+
+\newcommand{\comment}[1]{}
+\newcommand{\eshcar}[1]{\noindent{\textcolor{violet}{\{{\bf eshcar:} \em #1\}}}}
+%\newcommand{\eurosys}[2]{{\color{red}\inred{#1}: {\color{violet}#2}}}
+\newcommand{\eurosys}[2]{#2}
+\newcommand{\guy}[1]{\noindent{\textcolor{blue}{\{{\bf guy:} \em #1\}}}}
+
+\newcommand\keywordstyle{\rmfamily\bfseries\upshape}
+\newcommand\operatorstyle{\rmfamily\mdseries\upshape}
+\newcommand\typestyle{\rmfamily\mdseries\upshape}
+\newcommand\functionstyle{\rmfamily\mdseries\scshape}
+\newcommand\identifierstyle{\rmfamily\mdseries\itshape}
+
+\newcommand{\para}[1]{\vspace{3pt}\noindent\textbf{\textit{#1}}}
+
+\newcommand\addkeywords[1]{%
+  \lstset{morekeywords=[1]{#1}}}
+
+\newcommand\addoperators[1]{%
+  \lstset{morekeywords=[2]{#1}}}
+
+\newcommand\addtypes[1]{%
+  \lstset{morekeywords=[3]{#1}}}
+
+\newcommand\addfunctions[1]{%
+  \lstset{morekeywords=[4]{#1}}}
+
+\newcommand{\tuple}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+\algnewcommand{\algorithmicgoto}{\textbf{goto}}%
+\algnewcommand{\Goto}[1]{\algorithmicgoto~\ref{#1}}%
+
+
+%\newtheorem{definition}{Definition}%[section]
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\renewcommand\footnotesize{\small}
+%\setlength{\textfloatsep}{0.15in}
+%\setlength{\abovecaptionskip}{10pt}
+%\setlength{\belowcaptionskip}{-2pt}
+
+\newcommand{\key}{\italMathId{key}}
+\newcommand{\ts}{\italMathId{ts}}
+\newcommand{\val}{\italMathId{val}}
+\newcommand{\ptr}{\italMathId{ptr}}
+\newcommand{\LimitSize}{\italMathId{LimitSize}}
+\newcommand{\OK}{\italMathId{OK}}
+\newcommand{\FULL}{\italMathId{FULL}}
+\newcommand{\NONE}{\italMathId{NONE}}
+
+\newcommand{\negspace}{\vspace{-0.5\baselineskip}}
+
+\newcommand{\Idit}[1]{{\bf [[Idit: #1]]}}
+\newcommand{\omitit}[1]{}
+
+\begin{document}
+% --- Author Metadata here ---
+\conferenceinfo{EuroSys '15}{April 21--24, 2015, Bordeaux, France}
+\copyrightyear{2015}
+\copyrightdata{978-1-4503-3238-5/15/04}
+\doi{2741948.2741973}
+% --- End of Author Metadata ---
+
+\title{Scaling Concurrent Log-Structured Data Stores}
+%\remove{
+\authorinfo{Guy Golan-Gueta}{Yahoo Labs\\Haifa,
+Israel}{ggolan@yahoo-inc.com}
+\authorinfo{Edward Bortnikov}{Yahoo Labs\\Haifa,
+Israel}{ebortnik@yahoo-inc.com}
+\authorinfo{Eshcar Hillel}{Yahoo Labs\\Haifa,
+Israel}{eshcar@yahoo-inc.com}
+\authorinfo{Idit Keidar}{Technion, Yahoo Labs\\Haifa,
+Israel}{idish@ee.technion.ac.il}
+%\authorinfo{Paper \#96 ; 13 pages}{}{}
+%}
+\remove{
+\numberofauthors{4}
+\author{
+ \alignauthor Guy Golan-Gueta\\
+   \affaddr Yahoo Labs\\
+   \affaddr Haifa, Israel\\
+   \email{ggolan@yahoo-inc.com}
+ \alignauthor Edward Bortnikov\\
+    \affaddr Yahoo Labs\\
+    \affaddr Haifa, Israel\\
+    \email{ebortnik@yahoo-inc.com}
+  \alignauthor Eshcar Hillel\\
+    \affaddr Yahoo Labs\\
+    \affaddr Haifa, Israel\\
+    \email{eshcar@yahoo-inc.com}
+\alignauthor Idit Keidar\\
+   \affaddr Technion\\
+   \affaddr Haifa, Israel\\
+   \email{idish@ee.technion.ac.il}
+}
+}
+
+\maketitle
+
+\begin{abstract}
+
+Log-structured data stores (LSM-DSs) are widely accepted as the state-of-the-art implementation of key-value stores. They replace random disk writes with sequential I/O, by accumulating large batches of updates in an in-memory data structure and merging it with the on-disk store in the background. While LSM-DS implementations proved to be highly successful at masking the I/O bottleneck, scaling them up on multicore CPUs
+remains a challenge. This is nontrivial due to their often rich APIs, as well as the need to coordinate the RAM access with the background I/O.
+
+We present \clsm, an algorithm for scalable concurrency in LSM-DS, which exploits multiprocessor-friendly data structures and non-blocking synchronization. \clsm\ supports a rich API, including consistent snapshot scans and general non-blocking read-modify-write operations.
+
+We implement \clsm\ based on the popular \leveldb\  key-value store, and evaluate it using intensive synthetic workloads as well as ones from production web-serving applications. Our algorithm outperforms state of the art LSM-DS implementations, improving throughput by 1.5x to 2.5x. Moreover, \clsm\ demonstrates superior scalability with the number of cores (successfully exploiting twice as many cores as the competition).
+
+
+%Log-structured data stores (LSM-DSs) are widely accepted as the state-of-the-art implementation of NoSQL key-value stores. They replace random disk writes with sequential I/O, by accumulating large batches of updates in an in-memory data structure and merging it with the on-disk store in the background. While LSM-DS implementations proved to be highly successful with masking the I/O bottleneck, their main challenge is scaling up on multicore CPUs. This is nontrivial due to their often rich APIs, as well as the need to coordinate the RAM access with the background I/O.
+%
+%We present \clsm, (pronounced Colosseum), an algorithm for scalable concurrency in LSM-DS, which exploits multiprocessor-friendly data structures and non-blocking synchronization in order to overcome the vertical scalability challenge. It supports a rich API, including snapshots, iterators, and general non-blocking read-modify-write operations. Our algorithm is non-blocking in all scenarios that do not involve access to disk.
+%
+%We implement \clsm\ based on the popular \leveldb\ key-value store, and evaluate it extensively using intensive synthetic workloads as well as ones from production Web-serving applications. Our algorithm conclusively outperforms state of the art LSM-DS implementations, improving throughput by 1.5x to 2.5x, and reducing latency by a similar factor. Moreover, \clsm\ demonstrates superior scalability with the number of cores (successfully exploiting at least twice as
+%many cores as the competition).
+
+\negspace
+\end{abstract}
+
+\input{introB}
+\input{background}
+%\input{algorithm}
+\input{algorithmB}
+\input{impl}
+\input{eval}
+\input{related}
+\input{discussion}
+%\input{ack}
+
+\bibliographystyle{acm-nice}
+\bibliography{clsm}
+
+%{\small{
+%\bibliographystyle{abbrv}
+%\bibliography{clsm}
+%}}
+
+\end{document}

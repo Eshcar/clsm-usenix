@@ -1,0 +1,23 @@
+target   = clsm
+texfiles = *.tex
+figfiles = *.eps
+bibfiles = $(target).bib
+
+all: tex bib 
+	dvips $(target).dvi
+	ps2pdf $(target).ps $(target).pdf
+
+tex:	bib $(texfiles) 
+	latex $(target)
+
+bib:	$(bibfiles)
+	latex $(target)
+	bibtex $(target)
+	latex $(target)
+	bibtex $(target)
+
+fig:	$(figfiles)
+	touch $(target).tex
+	
+clean:
+	rm -f *.log *.aux *.bbl *.blg *.ps *.pdf *~

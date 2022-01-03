@@ -1,0 +1,96 @@
+\section{Introduction}
+\label{sec:intro}
+
+%key-value databases
+Over the last decade,  \emph{key-value stores} have become prevalent
+for real-time serving of Internet-scale data~\cite{Bigtable2006}. Gigantic  stores managing billions of items
+serve Web search indexing~\cite{Percolator2010}, messaging~\cite{FBMessaging2012}, personalized media,
+and advertising~\cite{PNUTS2008}. A key-value store is essentially a persistent map with atomic get and put
+operations used to access data items identified by unique keys.
+%Typical response times feature low milliseconds per request within a datacenter~\cite{RocksDB}.
+Modern  stores also support consistent snapshot scans and range queries for online analytics.
+
+%LSM-stores
+In write-intensive environments, key-value stores are commonly implemented  as
+\emph{Log-Structured Merge Data Stores (LSM-DSs)}~\cite{leveldb,Bigtable2006,PNUTS2008,hbase,Lakshman2010,RocksDB,BLSM2012}
+(see Section~\ref{sec:background}). The main centerpiece behind such data stores is absorbing large batches of writes
+in a RAM data structure that is merged into a (substantially larger) persistent data store upon spillover.
+This approach masks persistent storage latencies from the end user, and increases throughput by performing I/O sequentially.
+%In addition, LSM-DSs are friendly to SSD storage, which
+%sustains a limited number of rewrites per disk block, and therefore does not suffer random updates.
+A major bottleneck of such data stores is their limited in-memory concurrency,
+%especially for writes,
+which, as we show in Section~\ref{sec:eval}, restricts their vertical scalability on multicore servers. In the past,
+this was not a serious limitation, as large Web-scale servers did not harness high-end multi-core hardware.
+Nowadays, however, servers with more cores have become cheaper, and 16-core machines commonplace
+in production settings.
+
+Our goal in this work is to improve the scalability of state-of the art key-value stores on multicore servers.
+We focus on a data store that runs on a single multicore machine, which is often the basic building block
+for a distributed database that runs on multiple machines (e.g.,~\cite{Bigtable2006,PNUTS2008}). Although
+it is possible to scale up by further partitioning the data and running multiple LSM-DS's on the same machine,
+there are significant advantages to consolidation~\cite{hbaseRegionArch}; see more detailed discussion in Section~\ref{sec:background}. We therefore strive to
+scale up a single LSM-DS by maximizing its parallelism.
+
+We present (in Section~\ref{sec:algorithm}) {\clsm}, \remove{-- pronounced Colosseum --} a scalable  LSM-DS
+algorithm optimized for multi-core machines. We implement  \clsm\ in the framework of the popular \leveldb~\cite{leveldb}
+library (Section~\ref{sec:impl}), and evaluate it extensively (Section~\ref{sec:eval}), showing better scalability and
+1.5x to 2.5x performance improvements over the state-of-the art.
+
+\subsection*{Contributions}
+
+This paper makes the following contributions:
+
+\para{Non-blocking synchronization.}
+{\clsm} overcomes the scalability bottlenecks incurred in previous works~\cite{leveldb,Hyperdex2012} by eliminating
+blocking during normal operation. It never explicitly blocks get operations, and
+only blocks puts for short periods of time before and \eurosys{A1}{after batch
+I/Os.
+%While quite a few previous works have used non-blocking synchronization at the
+% data structure level~\cite{Herlihy2008}, we are not aware of any previous work that improved full-system performance using this approach.
+}
+% Consequently, in the absence of physical disk access, \clsm\ is non-blocking (lock-free).
+
+% rich api
+\para{Rich API.}
+Beyond atomic put and get operations, \clsm\ also supports consistent
+snapshot scans, which can be used to provide range queries.  These are
+important for  applications such as online analytics~\cite{Bigtable2006}, and multi-object transactions~\cite{Omid2014}.
+In addition, \clsm\ supports fully-general non-blocking atomic \emph{read-modify-write} (RMW) operations. We are not aware of any existing lock-free support for such operations in today's key-value stores. Such operations are useful, e.g., for multisite update reconciliation~\cite{PNUTS2008,Dynamo07}.
+
+\para{Generic algorithm.} %{\color{blue}TODO}
+Our algorithm for supporting puts, gets, snapshot scans, and range queries is decoupled from any specific implementation of the LSM-DS's main building blocks, namely the in-memory component (a map data structure), the disk store,  and the merge process that integrates the former into the latter.
+Only our support for atomic read-modify-write requires a specific implementation of the in-memory component
+as a skip-list data structure.
+This allows one to readily benefit from numerous optimizations of other components
+(e.g., disk management~\cite{RocksDB}) which are orthogonal to our contribution.
+
+\para{Implementation.}
+We implement a working prototype of {\clsm} based on {\leveldb}~\cite{leveldb}, a state-of-the-art key-value store.
+Our implementation supports the full functionality of {\leveldb}
+\eurosys{I4}{and inherits its core modules (including disk and cache management),
+and therefore benefits from the same optimizations.}
+
+\para{Evaluation.}
+We compare \clsm's performance to {\leveldb} and three additional open-source key-value stores,
+HyperLevelDB~\cite{Hyperdex2012},  bLSM~\cite{BLSM2012}, and RocksDB~\cite{RocksDB}, on production-grade multi-core hardware.
+We evaluate the systems under large-scale intensive synthetic workloads as well as production workloads from
+a web-scale system serving personalized content and ad recommendation products.
+
+In our experiments, {\clsm} achieves performance improvements ranging between 1.5x and 2.5x
+over the best competitor, on a variety of workloads.
+\clsm's RMW operations are also twice as fast as a popular implementation based on lock striping~\cite{GrayTP1993}.
+%Across all workloads,
+Furthermore, \clsm\ exhibits superior scalability, successfully utilizing at least twice as many threads, and also
+benefits more from a larger RAM allocation to the in-memory component.
+%Finally, \clsm's memory-based put and get operations are unaffected by background disk snapshot scans.
+%Finally, {\clsm} efficiently separates the real-time and analytics workloads -- its per-CPU performance is unaffected
+%by background disk scans.
+%Our results manifest consistently across magnetic and flash storage.
+
+%We evaluate the performance of our implementation on several synthetic and real-life workloads.
+%Our evaluation shows that {\clsm} provides scalable read and write operations.
+%Furthermore, the evaluation indicates that our {\clsm} implementation outperforms existing state of the art implementations of concurrent LSM-stores.
+%{\color{blue}TODO: explain that we benefit from the cache of the disk).}
+%{\color{blue}TODO: mention almost lock-free (and the impact on performance).}
+

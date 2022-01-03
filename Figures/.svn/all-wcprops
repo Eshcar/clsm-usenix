@@ -1,0 +1,257 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/yahoo-lsm-ssds/!svn/ver/201/Src/latex/trunk/Figures
+END
+prodD.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/prodD.pdf
+END
+prodE.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/prodE.pdf
+END
+100_read_latency_vs_throughput.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/yahoo-lsm-ssds/!svn/ver/201/Src/latex/trunk/Figures/100_read_latency_vs_throughput.pdf
+END
+HeavyCompactions.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/HeavyCompactions.pdf
+END
+scanExample.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/yahoo-lsm-ssds/!svn/ver/191/Src/latex/trunk/Figures/scanExample.pptx
+END
+OSDI-performance.xlsx
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/yahoo-lsm-ssds/!svn/ver/174/Src/latex/trunk/Figures/OSDI-performance.xlsx
+END
+100_read_throughput.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/100_read_throughput.pdf
+END
+100_rmw_latency_vs_throughput.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/yahoo-lsm-ssds/!svn/ver/152/Src/latex/trunk/Figures/100_rmw_latency_vs_throughput.pptx
+END
+prodB.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/prodB.pptx
+END
+100_write_latency_vs_throughput.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/yahoo-lsm-ssds/!svn/ver/201/Src/latex/trunk/Figures/100_write_latency_vs_throughput.pdf
+END
+prodD.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/prodD.pptx
+END
+HeavyCompactions.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/HeavyCompactions.pptx
+END
+example2.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/yahoo-lsm-ssds/!svn/ver/123/Src/latex/trunk/Figures/example2.pptx
+END
+prod4Partitions.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/yahoo-lsm-ssds/!svn/ver/115/Src/latex/trunk/Figures/prod4Partitions.pdf
+END
+triangle.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/yahoo-lsm-ssds/!svn/ver/189/Src/latex/trunk/Figures/triangle.pdf
+END
+100_rmw_latency_vs_throughput.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/yahoo-lsm-ssds/!svn/ver/152/Src/latex/trunk/Figures/100_rmw_latency_vs_throughput.pdf
+END
+100_read_throughput.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/100_read_throughput.pptx
+END
+100_write_8_thread_latency.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/yahoo-lsm-ssds/!svn/ver/70/Src/latex/trunk/Figures/100_write_8_thread_latency.pdf
+END
+100_read_16_thread_latency.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/yahoo-lsm-ssds/!svn/ver/76/Src/latex/trunk/Figures/100_read_16_thread_latency.pdf
+END
+100_write_latency_vs_throughput.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/yahoo-lsm-ssds/!svn/ver/201/Src/latex/trunk/Figures/100_write_latency_vs_throughput.pptx
+END
+50r50w_buffer.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/yahoo-lsm-ssds/!svn/ver/163/Src/latex/trunk/Figures/50r50w_buffer.pptx
+END
+example2.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/yahoo-lsm-ssds/!svn/ver/125/Src/latex/trunk/Figures/example2.pdf
+END
+50r50w_throughput.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/50r50w_throughput.pptx
+END
+50scan50w_throughput.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/50scan50w_throughput.pdf
+END
+Presentation1.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/yahoo-lsm-ssds/!svn/ver/123/Src/latex/trunk/Figures/Presentation1.pptx
+END
+example3.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/yahoo-lsm-ssds/!svn/ver/191/Src/latex/trunk/Figures/example3.pdf
+END
+100_rmw_throughput.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/yahoo-lsm-ssds/!svn/ver/153/Src/latex/trunk/Figures/100_rmw_throughput.pdf
+END
+architecture.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/yahoo-lsm-ssds/!svn/ver/189/Src/latex/trunk/Figures/architecture.pdf
+END
+100_write_throughput.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/100_write_throughput.pptx
+END
+prodA.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/prodA.pptx
+END
+prodE.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/prodE.pptx
+END
+50r50w_buffer.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/yahoo-lsm-ssds/!svn/ver/153/Src/latex/trunk/Figures/50r50w_buffer.pdf
+END
+50r50w_throughput.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/50r50w_throughput.pdf
+END
+100_read_latency_vs_throughput.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/yahoo-lsm-ssds/!svn/ver/201/Src/latex/trunk/Figures/100_read_latency_vs_throughput.pptx
+END
+100_rmw_throughput.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/yahoo-lsm-ssds/!svn/ver/153/Src/latex/trunk/Figures/100_rmw_throughput.pptx
+END
+50scan50w_throughput.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/50scan50w_throughput.pptx
+END
+scanExample.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/yahoo-lsm-ssds/!svn/ver/166/Src/latex/trunk/Figures/scanExample.pdf
+END
+100_rmw_16_thread_latency.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/yahoo-lsm-ssds/!svn/ver/70/Src/latex/trunk/Figures/100_rmw_16_thread_latency.pdf
+END
+100_write_throughput.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/100_write_throughput.pdf
+END
+architecture.pptx
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/yahoo-lsm-ssds/!svn/ver/189/Src/latex/trunk/Figures/architecture.pptx
+END
+prodA.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/prodA.pdf
+END
+prodB.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/yahoo-lsm-ssds/!svn/ver/170/Src/latex/trunk/Figures/prodB.pdf
+END
